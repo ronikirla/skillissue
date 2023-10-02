@@ -8,7 +8,7 @@
 ### Install requirements: ```pip install -r requirements.txt```
 ### Usage: ```python skillissue.py [-h] [-w WEIGHT] [-m MIN_WEIGHT] [-d] [-s START] [-p PERCENTILE] [-a] [-H] filename```
 
-### Positional arguments:
+### Positional arguments
   `filename`: LiveSplit splits file (.lss)
 
 ### Options
