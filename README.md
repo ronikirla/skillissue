@@ -25,3 +25,5 @@
 `-a`, `--use_average`: Uses average instead of percentile for calculations. Forces -d and ignores -p.
 
 `-H`, `--hist`, `--histogram`: Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.
+
+![Sample graph](sample_figure.png)
