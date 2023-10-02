@@ -26,4 +26,6 @@
 
 `-H`, `--hist`, `--histogram`: Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.
 
+### Sample graph
+
 ![Sample graph](sample_figure.png)
