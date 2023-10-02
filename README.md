@@ -4,7 +4,8 @@
 
 **Visualize your skill progression in a speedrun using your splits file.**
 
-### Usage: ``` skillissue.py [-h] [-w WEIGHT] [-m MIN_WEIGHT] [-d] [-s START] [-p PERCENTILE] [-a] [-H] filename```
+### Install requirements: ```pip install -r requirements.txt```
+### Usage: ```python skillissue.py [-h] [-w WEIGHT] [-m MIN_WEIGHT] [-d] [-s START] [-p PERCENTILE] [-a] [-H] filename```
 
 ### Positional arguments:
   `filename`: LiveSplit splits file (.lss)
