@@ -5,7 +5,7 @@
 
 **Visualize your skill progression in a speedrun using your splits file.**
 
-Some speedruns, such as randomizers or otherwise heavily RNG-dependent categories, could use for a more accurate measure of skill than your personal best. A statistic such as average or median is much less prone to random variance. This tool provides the means to track and visualize your skill progression with a statistic of your choosing by analyzing your LiveSplit data. The default settings assume a no-reset scenario, where an unfinished run is counted as infinite time. This is to remove bias caused by resetting. For the best results, it is recommended to perform a lot of no-reset runs. You can also drop resets out from the calculation, but the results will not be quite as accurate then.
+Some speedruns, such as randomizers or otherwise heavily RNG-dependent categories, could use a more accurate measure of skill than your personal best. A statistic such as average or median is much less prone to random variance. This tool provides the means to track and visualize your skill progression with a statistic of your choosing by analyzing your LiveSplit data. The default settings assume a no-reset scenario, where an unfinished run is counted as infinite time. This is to remove bias caused by resetting. For the best results, it is recommended to perform a lot of no-reset runs. You can also drop resets out from the calculation, but the results will not be quite as accurate then.
 
 
 ### Install requirements: ```pip install -r requirements.txt```
