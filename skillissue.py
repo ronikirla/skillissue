@@ -77,7 +77,7 @@ def main():
         if not drop_missing:
             attempts.append(float("inf"))
 
-    # Calculate statistic using a sample of sample_size splits in a window moving from past towards present
+    # Calculate statistic using a weighted window moving from past towards present
     weighted_attempts = list(filter(lambda x: x[1] > min_weight, list(map(
         lambda x: (x[0], weight ** x[0], x[1]),
         enumerate(reversed(attempts))
