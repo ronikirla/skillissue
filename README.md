@@ -31,7 +31,7 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 
 * `-H`, `--hist`, `--histogram`: Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.
 
-* `-r REMAKE_WINDOW`, `--remake_window REMAKE_WINDOW`: Number of seconds during which resets at the start of a run are not counted as a forfeit.
+* `-r REMAKE_WINDOW`, `--remake_window REMAKE_WINDOW`: Number of seconds during which resets at the start of a run are not counted as a forfeit. Default 0.
 
 ### Sample graph
 
