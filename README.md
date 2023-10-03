@@ -33,6 +33,10 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 
 * `-r REMAKE_WINDOW`, `--remake_window REMAKE_WINDOW`: Number of seconds during which resets at the start of a run are not counted as a forfeit. Default 0.
 
+*   `-n N_SIMS`, `--n_sims N_SIMS`:  Specify how many simulations to perform when generating an aggregate splitwise histogram. Default 1000.
+
+*   `-g`, `--game_time`: Use LiveSplit GameTime instead of RealTime. Proceed with caution if using with -r, as that is still using real time.
+
 ### Sample graph
 
 ![Sample graph](sample_figure.png)
