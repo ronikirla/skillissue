@@ -1,3 +1,5 @@
+import random
+
 class WeightedUtils():
     """Calcualte weighted statistics from an array of (index, weight, value) tuples."""
     def __init__(self, arr):
@@ -31,3 +33,11 @@ class WeightedUtils():
                 continue
             sum += w * v
         return sum / w_sum
+
+    def simulate(self, n, min_index = 0, max_index = -1):
+        """Return an arrary of n simulations from the weighted array."""
+        w_sum = sum(map(lambda x: x[1], self.__arr[min_index:max_index]))
+        sim_results = []
+        for _ in range(n):
+            sim_results.append(self.weighted_percentile(random.random(), w_sum, min_index, max_index))
+        return sim_results

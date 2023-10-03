@@ -37,9 +37,16 @@ def main():
                         type=positive_int,
                         help="Number of seconds during which resets at the start of a run are not counted as a forfeit. Default 0.",
                         default=0)
-    #TODO parser.add_argument("-P", "--per_split",
-    #TODO                     action="store_true",
-    #TODO                     help="Generate the output splitwise instead of based on the finish times. Stores the output plots in a folder.")
+    parser.add_argument("-P", "--per_split",
+                        action="store_true",
+                        help="Generate the output splitwise instead of based on the finish times. Stores the output plots in a folder.")
+    parser.add_argument("-n", "--n_sims",
+                        type=positive_int,
+                        help="Specify how many simulations to perform when generating an aggregate splitwise histogram. Default 1000.",
+                        default=1000)
+    #TODO fix finish ratio not respecting chosen bounds but always defaulting to full range and in general keep the information about missing splits longer
+    # add numpy req
+    # gametime support
 
     args = parser.parse_args()
     args.drop_missing = args.drop_missing or args.use_average or args.hist
@@ -53,8 +60,11 @@ def main():
         print("Malformatted splits")
         return
     
-    full_runs = splits_xml.read_finished_runs()
-
-    analyze_split_data(args, full_runs)
+    if args.per_split:
+        splits = splits_xml.read_all_splits()
+        analyze_split_data(args, splits)
+    else:
+        full_runs = splits_xml.read_finished_runs()
+        analyze_split_data(args, [full_runs])
 
 main()
