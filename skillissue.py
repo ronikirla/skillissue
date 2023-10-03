@@ -1,12 +1,8 @@
 import argparse
-import xml.etree.ElementTree as ET
-from datetime import datetime as dt
-import re
-from modules.weighted_utils import *
 from modules.restricted_types import *
-from modules.plotting import *
-
-DEFAULT_DT = dt.strptime("0:0:0.00", "%H:%M:%S.%f")
+from modules.analyze_split_data import *
+from modules.read_splits_xml import SplitsXML
+import xml.etree.ElementTree as ET
 
 def main():
     parser = argparse.ArgumentParser(description="Visualize your skill progression in a speedrun using your splits file.")
@@ -39,85 +35,26 @@ def main():
                         help="Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.")
     parser.add_argument("-r", "--remake_window",
                         type=positive_int,
-                        help="Number of seconds during which resets at the start of a run are not counted as a forfeit.",
+                        help="Number of seconds during which resets at the start of a run are not counted as a forfeit. Default 0.",
                         default=0)
     #TODO parser.add_argument("-P", "--per_split",
     #TODO                     action="store_true",
     #TODO                     help="Generate the output splitwise instead of based on the finish times. Stores the output plots in a folder.")
 
     args = parser.parse_args()
+    args.drop_missing = args.drop_missing or args.use_average or args.hist
 
     try:
-        tree = ET.parse(args.filename)
+        splits_xml = SplitsXML(args)
     except OSError as err:
         print("Failed to read:", err.filename)
-        exit()
+        return
     except ET.ParseError:
         print("Malformatted splits")
-        exit()
-
-    weight = args.weight
-    drop_missing = args.drop_missing or args.use_average or args.hist
-    start = args.start
-    percentile = args.percentile
-    use_average = args.use_average
-    hist = args.hist
-    min_weight = args.min_weight
-    remake_window = args.remake_window
-
-    # Read run times from splits file into an array
-    root = tree.getroot()
-    attempts = []
-    missing = 0
-    nof_attempts = 0
-    for attempt in root.find("AttemptHistory").findall("Attempt"):
-        nof_attempts += 1
-        realtime = attempt.find("RealTime")
-        if realtime != None:
-            text = re.search("[^.]*...", realtime.text).group()
-            t = dt.strptime(text, "%H:%M:%S.%f")
-            attempts.append((t - DEFAULT_DT).total_seconds())
-            continue
-        missing += 1
-        if not drop_missing:
-            started = dt.strptime(attempt.attrib["started"], "%m/%d/%Y %H:%M:%S")
-            ended = dt.strptime(attempt.attrib["ended"], "%m/%d/%Y %H:%M:%S")
-            attempt_time = ended - started
-            if attempt_time.seconds > remake_window:
-                attempts.append(float("inf"))
-            else:
-                # Undo the added missing time in case run was shorter than remake_window
-                missing -= 1
-
-    # Calculate statistic using a weighted window moving from past towards present
-    weighted_attempts = list(filter(lambda x: x[1] > min_weight, list(map(
-        lambda x: (x[0], weight ** x[0], x[1]),
-        enumerate(reversed(attempts))
-    ))))
-
-    finish_rate = (nof_attempts - missing) / nof_attempts
-
-    if hist:
-        plot_hist(weighted_attempts, start, len(attempts), finish_rate)
         return
     
-    weighted_utils = WeightedUtils(weighted_attempts)
-    result_history = []
-    for i in range(len(attempts)):
-        latest_attempt = (len(attempts) - i - 1)
-        if use_average:
-            result = weighted_utils.weighted_average(
-                sum(weight ** x for x in range(latest_attempt, len(attempts))),
-                min_index=latest_attempt
-            )
-        else:
-            result = weighted_utils.weighted_percentile(
-                percentile,
-                sum(weight ** x for x in range(latest_attempt, len(attempts))),
-                min_index=latest_attempt
-            )
-        result_history.append(result)
-    
-    plot_progress(result_history, start, len(attempts), percentile, use_average, finish_rate)
+    full_runs = splits_xml.read_finished_runs()
+
+    analyze_split_data(args, full_runs)
 
 main()
