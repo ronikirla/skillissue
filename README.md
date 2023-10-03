@@ -5,7 +5,7 @@
 
 **Visualize your skill progression in a speedrun using your splits file.**
 
-Some speedruns, such as randomizers or otherwise heavily RNG-dependent categories, could use a more accurate measure of skill than your personal best. A statistic such as average or median is much less prone to random variance. This tool provides the means to track and visualize your skill progression with a statistic of your choosing by analyzing your LiveSplit data. The default settings assume a no-reset scenario, where an unfinished run is counted as infinite time. This is to remove bias caused by resetting. For the best results, it is recommended to perform a lot of no-reset runs. You can also drop resets out from the calculation, but the results will not be quite as accurate then.
+Some speedruns, such as randomizers or otherwise heavily RNG-dependent categories, could use a more accurate measure of skill than your personal best. A statistic such as average or median is much less prone to random variance. This tool provides the means to track and visualize your skill progression with a statistic of your choosing by analyzing your LiveSplit data. The default settings assume a no-reset scenario, where an unfinished run is counted as a forfeit (infinite time). This is to remove bias caused by resetting. For the best results, it is recommended to perform a lot of no-reset runs. You can also drop resets out from the calculation, but the results will not be quite as accurate then.
 
 
 ### Install requirements: ```pip install -r requirements.txt```
@@ -21,7 +21,7 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 
 * `-m MIN_WEIGHT`, `--min_weight MIN_WEIGHT`: Increase this to drop old attempts completely. After the weight of a time has decayed to this value, the time will be dropped. Useful with -H. Default 0.
 
-* `-d`, `--drop_missing`: By default, resets are counted as infinite time runs. This option ignores them instead.
+* `-d`, `--drop_missing`: By default, resets are counted as infinite time runs, essentially treating them as forfeits.
 
 * `-s START`, `--start START`: Older attempts than this will not be shown in the resulting graph. Default 1.
 
@@ -30,6 +30,8 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 * `-a`, `--use_average`: Uses average instead of percentile for calculations. Forces -d and ignores -p.
 
 * `-H`, `--hist`, `--histogram`: Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.
+
+* `-r REMAKE_WINDOW`, `--remake_window REMAKE_WINDOW`: Number of seconds during which resets at the start of a run are not counted as a forfeit.
 
 ### Sample graph
 
