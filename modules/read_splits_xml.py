@@ -16,6 +16,7 @@ class SplitsXML():
     def __init__(self, args):
         self.__args = args
         self.__tree = ET.parse(args.filename)
+        self.__time_string = "GameTime" if args.game_time else "RealTime"
 
     def read_finished_runs(self):
         """Read finished run times from splits file into a split object."""
@@ -25,7 +26,7 @@ class SplitsXML():
         nof_attempts = 0
         for attempt in root.find("AttemptHistory").findall("Attempt"):
             nof_attempts += 1
-            realtime = attempt.find("RealTime")
+            realtime = attempt.find(self.__time_string)
             if realtime != None:
                 text = re.search("[^.]*...", realtime.text).group()
                 t = dt.strptime(text, "%H:%M:%S.%f")
@@ -69,7 +70,7 @@ class SplitsXML():
                             if not self.__args.drop_missing:
                                 attempts.append(float("inf"))
                     continue
-                realtime = time.find("RealTime")
+                realtime = time.find(self.__time_string)
                 if realtime != None:
                     text = re.search("[^.]*...", realtime.text).group()
                     t = dt.strptime(text, "%H:%M:%S.%f")

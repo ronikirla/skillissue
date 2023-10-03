@@ -44,9 +44,10 @@ def main():
                         type=positive_int,
                         help="Specify how many simulations to perform when generating an aggregate splitwise histogram. Default 1000.",
                         default=1000)
+    parser.add_argument("-g", "--game_time",
+                        action="store_true",
+                        help="Use LiveSplit GameTime instead of RealTime. Proceed with caution if using with -r, as that is still using real time.")
     #TODO fix finish ratio not respecting chosen bounds but always defaulting to full range and in general keep the information about missing splits longer
-    # add numpy req
-    # gametime support
 
     args = parser.parse_args()
     args.drop_missing = args.drop_missing or args.use_average or args.hist
