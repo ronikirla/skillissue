@@ -22,7 +22,7 @@ def main():
                         default=0)
     parser.add_argument("-d", "--drop_missing",
                         action="store_true",
-                        help="By default, resets are counted as infinite time runs. This option ignores them instead.")
+                        help="By default, resets are counted as infinite time runs, essentially treating them as forfeits. This option ignores them instead.")
     parser.add_argument("-s", "--start",
                         type=positive_int,
                         help="Older attempts than this will not be shown in the resulting graph. Default 1.",
@@ -37,6 +37,10 @@ def main():
     parser.add_argument("-H", "--hist", "--histogram",
                         action="store_true",
                         help="Output a histogram visualizing the distribution of your times instead of a progression chart. Forces -d and ignores -p and -a.")
+    parser.add_argument("-r", "--remake_window",
+                        type=positive_int,
+                        help="Number of seconds during which resets at the start of a run are not counted as a forfeit.",
+                        default=0)
     #TODO parser.add_argument("-P", "--per_split",
     #TODO                     action="store_true",
     #TODO                     help="Generate the output splitwise instead of based on the finish times. Stores the output plots in a folder.")
@@ -59,6 +63,7 @@ def main():
     use_average = args.use_average
     hist = args.hist
     min_weight = args.min_weight
+    remake_window = args.remake_window
 
     # Read run times from splits file into an array
     root = tree.getroot()
@@ -75,7 +80,14 @@ def main():
             continue
         missing += 1
         if not drop_missing:
-            attempts.append(float("inf"))
+            started = dt.strptime(attempt.attrib["started"], "%m/%d/%Y %H:%M:%S")
+            ended = dt.strptime(attempt.attrib["ended"], "%m/%d/%Y %H:%M:%S")
+            attempt_time = ended - started
+            if attempt_time.seconds > remake_window:
+                attempts.append(float("inf"))
+            else:
+                # Undo the added missing time in case run was shorter than remake_window
+                missing -= 1
 
     # Calculate statistic using a weighted window moving from past towards present
     weighted_attempts = list(filter(lambda x: x[1] > min_weight, list(map(
