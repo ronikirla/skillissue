@@ -9,7 +9,7 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 
 
 ### Install requirements: ```pip install -r requirements.txt```
-### Usage: ```python skillissue.py [-h] [-w WEIGHT] [-m MIN_WEIGHT] [-d] [-s START] [-p PERCENTILE] [-a] [-H] filename```
+### Usage: ```python skillissue.py [-h] [-w WEIGHT] [-m MIN_WEIGHT] [-d] [-s START] [-p PERCENTILE] [-a] [-H] [-r REMAKE_WINDOW] [-P] [-n N_SIMS] [-g] filename```
 
 ### Positional arguments
   `filename`: LiveSplit splits file (.lss)
