@@ -21,7 +21,7 @@ Some speedruns, such as randomizers or otherwise heavily RNG-dependent categorie
 
 * `-m MIN_WEIGHT`, `--min_weight MIN_WEIGHT`: Increase this to drop old attempts completely. After the weight of a time has decayed to this value, the time will be dropped. Useful with `-H`. Default `0`.
 
-* `-d`, `--drop_missing`: By default, resets are counted as infinite time runs, essentially treating them as forfeits.
+* `-d`, `--drop_missing`: By default, resets are counted as infinite time runs, essentially treating them as forfeits. This option ignores them instead.
 
 * `-s START`, `--start START`: Older attempts than this will not be shown in the resulting graph. Default `1`.
 
