@@ -73,7 +73,10 @@ class SplitsXML():
                 realtime = time.find(self.__time_string)
                 if realtime != None:
                     text = re.search("[^.]*...", realtime.text).group()
-                    t = dt.strptime(text, "%H:%M:%S.%f")
+                    try:
+                        t = dt.strptime(text, "%H:%M:%S.%f")
+                    except ValueError:
+                        t = dt.strptime(text, "%H:%M:%S")
                     seconds = (t - self.DEFAULT_DT).total_seconds()
                     attempts.append(seconds)
                     attempt_progress.accuml_time = seconds
